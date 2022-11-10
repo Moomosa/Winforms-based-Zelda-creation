@@ -8,5 +8,9 @@ namespace _225_Final
 {
     internal class Enemy : Character
     {
+        public Enemy(int x, int y) : base(x,y)
+        {
+
+        }
     }
 }
