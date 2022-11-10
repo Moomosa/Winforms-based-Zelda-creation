@@ -5,15 +5,20 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Timer = System.Windows.Forms.Timer;
 
 namespace _225_Final
 {
     public class Link : Character
     {
-        List<Image> linkImage = new();
+        private List<Image> linkImage = new();
         private Vector2 inputDirection = new();
         private Vector2 initialPosition = new();
         private Vector2 tileSize = new Vector2(24, 24);
+        private enum Facing { Up, Down, Left, Right }
+        private Facing facing = Facing.Up;
+        private Timer animationTimer = new();
+        private int animCounter = 0;
         private bool isMoving = false;
         private int health = 6;
         private int speed = 2;
@@ -32,19 +37,36 @@ namespace _225_Final
                     continue;
                 linkImage.Add(new Bitmap(image));
             }
-            pic.Image = linkImage[4];
+            pic.Image = linkImage[5];
             Form1.gameField.Controls.Add(pic);
+            animationTimer.Enabled = false;
+            animationTimer.Interval = 60;
+            animationTimer.Tick += AnimationTimer_Tick;
         }
 
+        #region Movement
         public void Movement()
         {
             if (!isMoving)
             {
                 processMovement();
+                Animation();
             }
             else if (inputDirection != Vector2.Zero)
             {
-                //animState.Travel("Walk");
+                if (inputDirection == new Vector2(0, -1)) //Up 0,-1                
+                    facing = Facing.Up;
+
+                if (inputDirection == new Vector2(0, 1))  //Down 0,1                
+                    facing = Facing.Down;
+
+                if (inputDirection == new Vector2(-1, 0)) //Left -1,0                
+                    facing = Facing.Left;
+
+                if (inputDirection == new Vector2(1, 0))  //Right 1,0                
+                    facing = Facing.Right;
+
+                Animation();
                 move();
             }
             else
@@ -52,38 +74,18 @@ namespace _225_Final
                 //animState.Travel("Idle");
                 isMoving = false;
             }
-
         }
 
         public void processMovement()
         {
             if (inputDirection.Y == 0)
-            {
-                //rightStrength = 0;
-                //leftStrength = 0;
-                //if (Form1.key.KeyChar == (Char)Keys.Right)
-                //    rightStrength = 1;
-                //if (Form1.key.KeyChar == (Char)Keys.Left)
-                //    leftStrength = 1;
-
                 inputDirection.X = rightStrength - leftStrength;
-            }
-            if (inputDirection.X == 0)
-            {
-                //upStrength = 0;
-                //downStrength = 0;
-                //if (Form1.key.KeyChar == (Char)Keys.Up)
-                //    upStrength = 1;
-                //if (Form1.key.KeyChar == (Char)Keys.Down)
-                //    downStrength = 1;
 
+            if (inputDirection.X == 0)
                 inputDirection.Y = downStrength - upStrength;
-            }
 
             if (inputDirection != Vector2.Zero)
             {
-                //animTree.Set("parameters/Idle/blend_position", inputDirection);
-                //animTree.Set("parameters/Walk/blend_position", inputDirection);
                 initialPosition.X = X;
                 initialPosition.Y = Y;
                 isMoving = true;
@@ -92,17 +94,14 @@ namespace _225_Final
             {
                 //animState.Travel("Idle");
             }
-
         }
 
         public void move()
         {
-            Vector2 desiredStep = new Vector2(inputDirection.X * tileSize.X / 2, inputDirection.Y * tileSize.Y / 2);
-            //ray.CastTo = desiredStep;
-            //ray.ForceRaycastUpdate();
+            //Vector2 desiredStep = new Vector2(inputDirection.X * tileSize.X / 2, inputDirection.Y * tileSize.Y / 2);
             if (isMoving)
             {
-                percentMovedToNextTile += speed * 0.1f;
+                percentMovedToNextTile += speed * 0.08f;
                 if (percentMovedToNextTile >= 1.0)
                 {
                     X = (int)Math.Round(initialPosition.X + (tileSize.X * inputDirection.X));
@@ -118,15 +117,58 @@ namespace _225_Final
                     Y = (int)Math.Round(initialPosition.Y + (tileSize.Y * inputDirection.Y * percentMovedToNextTile));
                     pic.Left = X;
                     pic.Top = Y;
-
-                    //Position = initialPosition + (tileSize * inputDirection * percentMovedToNextTile);
                 }
             }
             else
-            {
                 isMoving = false;
+        }
+        #endregion
+        #region Animation
+        private void AnimationTimer_Tick(object? sender, EventArgs e)
+        {
+            switch (facing)
+            {
+                case Facing.Up:
+                    if (animCounter == 0)
+                        pic.Image = linkImage[4];
+                    if (animCounter == 4)
+                        pic.Image = linkImage[5];
+                    break;
+
+                case Facing.Down:
+                    if (animCounter == 0)
+                        pic.Image = linkImage[0];
+                    if (animCounter == 4)
+                        pic.Image = linkImage[1];
+                    break;
+
+                case Facing.Left:
+                    if (animCounter == 0)
+                        pic.Image = linkImage[11];
+                    if (animCounter == 4)
+                        pic.Image = linkImage[12];
+                    break;
+
+                case Facing.Right:
+                    if (animCounter == 0)
+                        pic.Image = linkImage[2];
+                    if (animCounter == 4)
+                        pic.Image = linkImage[3];
+                    break;
             }
+            animCounter++;
+            if (animCounter == 9)
+                animCounter = 0;
         }
 
+
+        public void Animation()
+        {
+            if (isMoving)
+                animationTimer.Enabled = true;
+            else
+                animationTimer.Enabled = false;
+        }
+        #endregion
     }
 }

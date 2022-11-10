@@ -10,7 +10,6 @@ namespace _225_Final
         Link link;
         SoundPlayer player = new();
         Timer gameTimer = new();
-        public static KeyPressEventArgs key;
 
         public Form1()
         {
@@ -51,12 +50,12 @@ namespace _225_Final
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            key = e;
             if (picTitle.Enabled == true && e.KeyChar == (char)Keys.Enter)
             {
+                picTitle.Enabled = false;
                 gameField.Controls.Remove(picTitle);
                 player.Stop();
-                Character.characters.Add(link = new Link(500, 500));
+                Character.characters.Add(link = new Link(360, 480));
                 gameTimer.Enabled = true;
             }
         }
@@ -65,7 +64,5 @@ namespace _225_Final
         {
             link.Movement();
         }
-
-
     }
 }
