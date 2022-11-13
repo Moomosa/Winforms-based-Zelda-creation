@@ -10,6 +10,7 @@ namespace _225_Final
         Link link;
         SoundPlayer player = new();
         Timer gameTimer = new();
+        public static List<Image> swordList = new();
 
         public Form1()
         {
@@ -22,6 +23,11 @@ namespace _225_Final
             gameTimer.Enabled = false;
             gameField.KeyDown += GameField_KeyDown;
             gameField.KeyUp += GameField_KeyUp;
+
+            swordList.Add(new Bitmap("Usable Sprites/Weapons/Sword01.png"));
+            swordList.Add(new Bitmap("Usable Sprites/Weapons/Sword02.png"));
+            swordList.Add(new Bitmap("Usable Sprites/Weapons/Sword03.png"));
+            swordList.Add(new Bitmap("Usable Sprites/Weapons/Sword04.png"));
         }
 
 
@@ -35,7 +41,11 @@ namespace _225_Final
                 link.upStrength = 1;
             if (e.KeyCode == Keys.Down)
                 link.downStrength = 1;
+
+            if (e.KeyCode == Keys.Z)
+                link.Attack();
         }
+
         private void GameField_KeyUp(object? sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Left)
@@ -58,6 +68,7 @@ namespace _225_Final
                 Character.characters.Add(link = new Link(360, 480));
                 gameTimer.Enabled = true;
             }
+
         }
 
         private void GameTimer_Tick(object? sender, EventArgs e)
