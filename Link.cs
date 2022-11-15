@@ -14,23 +14,10 @@ namespace _225_Final
     {
         private List<Image> linkImage = new();
         Sword sword;
-        private Vector2 inputDirection = new();
-        private Vector2 initialPosition = new();
         private Vector2 tileSize = new Vector2(24, 24);
-        private enum Facing { Up, Down, Left, Right }
-        private Facing facing = Facing.Up;
-        private Timer animationTimer = new();
-        private int animCounter = 0;
-        private bool isMoving = false;
-        private bool isAttacking = false;
+        public bool isAttacking = false;
         private int health = 6;
-        private int speed = 2;
-        public int rightStrength = 0;
-        public int leftStrength = 0;
-        public int upStrength = 0;
-        public int downStrength = 0;
-
-        private float percentMovedToNextTile = 0.0f;
+        private int speed = 5;
 
         public Link(int x, int y) : base(x, y)
         {
@@ -41,10 +28,7 @@ namespace _225_Final
                 linkImage.Add(new Bitmap(image));
             }
             pic.Image = linkImage[5];
-            Form1.gameField.Controls.Add(pic);
-            animationTimer.Enabled = false;
-            animationTimer.Interval = 60;
-            animationTimer.Tick += AnimationTimer_Tick;
+            facing = Character.Facing.Up;
         }
 
         #region Movement
@@ -57,17 +41,25 @@ namespace _225_Final
             }
             else if (inputDirection != Vector2.Zero)
             {
-                if (inputDirection == new Vector2(0, -1)) //Up 0,-1                
+                if (inputDirection == new Vector2(0, -1)) //Up 0,-1
+                {
                     facing = Facing.Up;
+                }
 
-                if (inputDirection == new Vector2(0, 1))  //Down 0,1                
+                if (inputDirection == new Vector2(0, 1))  //Down 0,1
+                {
                     facing = Facing.Down;
+                }
 
-                if (inputDirection == new Vector2(-1, 0)) //Left -1,0                
+                if (inputDirection == new Vector2(-1, 0)) //Left -1,0
+                {
                     facing = Facing.Left;
+                }
 
-                if (inputDirection == new Vector2(1, 0))  //Right 1,0                
+                if (inputDirection == new Vector2(1, 0))  //Right 1,0
+                {
                     facing = Facing.Right;
+                }
 
                 Animation();
                 move();
@@ -130,38 +122,30 @@ namespace _225_Final
         }
         #endregion
         #region Animation
-        private void AnimationTimer_Tick(object? sender, EventArgs e)
+        public override void AnimationTimer_Tick(object? sender, EventArgs e)
         {
             if (!isAttacking)
             {
                 switch (facing)
                 {
                     case Facing.Up:
-                        if (animCounter == 0)
-                            pic.Image = linkImage[4];
-                        if (animCounter == 4)
-                            pic.Image = linkImage[5];
+                        if (animCounter == 0) pic.Image = linkImage[4];
+                        if (animCounter == 4) pic.Image = linkImage[5];
                         break;
 
                     case Facing.Down:
-                        if (animCounter == 0)
-                            pic.Image = linkImage[0];
-                        if (animCounter == 4)
-                            pic.Image = linkImage[1];
+                        if (animCounter == 0) pic.Image = linkImage[0];
+                        if (animCounter == 4) pic.Image = linkImage[1];
                         break;
 
                     case Facing.Left:
-                        if (animCounter == 0)
-                            pic.Image = linkImage[11];
-                        if (animCounter == 4)
-                            pic.Image = linkImage[12];
+                        if (animCounter == 0) pic.Image = linkImage[11];
+                        if (animCounter == 4) pic.Image = linkImage[12];
                         break;
 
                     case Facing.Right:
-                        if (animCounter == 0)
-                            pic.Image = linkImage[2];
-                        if (animCounter == 4)
-                            pic.Image = linkImage[3];
+                        if (animCounter == 0) pic.Image = linkImage[2];
+                        if (animCounter == 4) pic.Image = linkImage[3];
                         break;
                 }
             }
@@ -170,31 +154,23 @@ namespace _225_Final
                 switch (facing)
                 {
                     case Facing.Up:
-                        if (animCounter == 0)
-                            pic.Image = linkImage[8];
-                        if (animCounter == 5)
-                            pic.Image = linkImage[4];
+                        if (animCounter == 0) pic.Image = linkImage[8];
+                        if (animCounter == 5) pic.Image = linkImage[4];
                         break;
 
                     case Facing.Down:
-                        if (animCounter == 0)
-                            pic.Image = linkImage[6];
-                        if (animCounter == 5)
-                            pic.Image = linkImage[0];
+                        if (animCounter == 0) pic.Image = linkImage[6];
+                        if (animCounter == 5) pic.Image = linkImage[0];
                         break;
 
                     case Facing.Left:
-                        if (animCounter == 0)
-                            pic.Image = linkImage[13];
-                        if (animCounter == 5)
-                            pic.Image = linkImage[11];
+                        if (animCounter == 0) pic.Image = linkImage[13];
+                        if (animCounter == 5) pic.Image = linkImage[11];
                         break;
 
                     case Facing.Right:
-                        if (animCounter == 0)
-                            pic.Image = linkImage[7];
-                        if (animCounter == 5)
-                            pic.Image = linkImage[2];
+                        if (animCounter == 0) pic.Image = linkImage[7];
+                        if (animCounter == 5) pic.Image = linkImage[2];
                         break;
                 }
                 if (animCounter == 5)
@@ -204,6 +180,7 @@ namespace _225_Final
                     animCounter = 0;
 
                 }
+
             }
             animCounter++;
             if (animCounter == 9)
@@ -225,7 +202,6 @@ namespace _225_Final
             isAttacking = true;
             animCounter = 0;
             sword = new Sword(X, Y, facing);
-
         }
     }
 }

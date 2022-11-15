@@ -6,11 +6,14 @@ namespace _225_Final
 {
     public partial class Form1 : Form
     {
+        public static Random rng = new Random();
+
         public static Form gameField;
         Link link;
         SoundPlayer player = new();
         Timer gameTimer = new();
         public static List<Image> swordList = new();
+        private int spawnTimerCount = 0;
 
         public Form1()
         {
@@ -42,7 +45,7 @@ namespace _225_Final
             if (e.KeyCode == Keys.Down)
                 link.downStrength = 1;
 
-            if (e.KeyCode == Keys.Z)
+            if (e.KeyCode == Keys.Z && !link.isAttacking)
                 link.Attack();
         }
 
@@ -68,12 +71,20 @@ namespace _225_Final
                 Character.characters.Add(link = new Link(360, 480));
                 gameTimer.Enabled = true;
             }
-
         }
 
         private void GameTimer_Tick(object? sender, EventArgs e)
         {
             link.Movement();
+            if(spawnTimerCount == 100 && Character.characters.Count <= 4)
+            {
+                Enemy octo = new Enemy(rng.Next(gameField.Width - 50), rng.Next(gameField.Height - 50));
+                Character.characters.Add(octo);
+                spawnTimerCount = 0;
+            }
+            spawnTimerCount++;
+
+            
         }
     }
 }

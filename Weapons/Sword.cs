@@ -29,23 +29,23 @@ namespace _225_Final.Weapons
                 case Facing.Up:
                     swordPic.Width = 24;
                     X += 12;
-                    Y -= 48;
+                    Y -= 40;
                     swordPic.Image = Form1.swordList[0];
                     break;
                 case Facing.Down:
                     swordPic.Width = 24;
                     X += 12;
-                    Y += 48;
+                    Y += 40;
                     swordPic.Image = Form1.swordList[2];                    
                     break;
                 case Facing.Left:
                     swordPic.Width = 48;
-                    X -= 48;
+                    X -= 40;
                     swordPic.Image = Form1.swordList[3];                    
                     break;
                 case Facing.Right:
                     swordPic.Width = 48;
-                    X += 48;
+                    X += 40;
                     swordPic.Image = Form1.swordList[1];
                     break;
 
@@ -59,7 +59,8 @@ namespace _225_Final.Weapons
 
         public void Remove()
         {
-            Form1.gameField.Controls.Remove(swordPic); 
+            Form1.gameField.Controls.Remove(swordPic);
+            swordPic.Dispose();
         }
     }
 }
