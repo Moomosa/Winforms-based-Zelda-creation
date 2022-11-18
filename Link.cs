@@ -16,8 +16,8 @@ namespace _225_Final
         Sword sword;
         private Vector2 tileSize = new Vector2(24, 24);
         public bool isAttacking = false;
-        private int health = 6;
         private int speed = 5;
+        
 
         public Link(int x, int y) : base(x, y)
         {
@@ -29,6 +29,7 @@ namespace _225_Final
             }
             pic.Image = linkImage[5];
             facing = Character.Facing.Up;
+            health = 6;
         }
 
         #region Movement
@@ -37,13 +38,13 @@ namespace _225_Final
             if (!isMoving)
             {
                 processMovement();
-                Animation();
+                AnimationState();
             }
             else if (inputDirection != Vector2.Zero)
             {
                 if (inputDirection == new Vector2(0, -1)) //Up 0,-1
                 {
-                    facing = Facing.Up;
+                    facing = Facing.Up;                    
                 }
 
                 if (inputDirection == new Vector2(0, 1))  //Down 0,1
@@ -61,7 +62,7 @@ namespace _225_Final
                     facing = Facing.Right;
                 }
 
-                Animation();
+                AnimationState();
                 move();
             }
             else
@@ -124,6 +125,15 @@ namespace _225_Final
         #region Animation
         public override void AnimationTimer_Tick(object? sender, EventArgs e)
         {
+            Animation();
+
+            animCounter++;
+            if (animCounter == 9)
+                animCounter = 0;
+        }
+
+        public override void Animation()
+        {
             if (!isAttacking)
             {
                 switch (facing)
@@ -182,13 +192,10 @@ namespace _225_Final
                 }
 
             }
-            animCounter++;
-            if (animCounter == 9)
-                animCounter = 0;
+
         }
 
-
-        public void Animation()
+        public void AnimationState()
         {
             if (isMoving || isAttacking)
                 animationTimer.Enabled = true;
@@ -202,6 +209,7 @@ namespace _225_Final
             isAttacking = true;
             animCounter = 0;
             sword = new Sword(X, Y, facing);
+            sword.Hit(facing);
         }
     }
 }

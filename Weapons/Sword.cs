@@ -36,12 +36,12 @@ namespace _225_Final.Weapons
                     swordPic.Width = 24;
                     X += 12;
                     Y += 40;
-                    swordPic.Image = Form1.swordList[2];                    
+                    swordPic.Image = Form1.swordList[2];
                     break;
                 case Facing.Left:
                     swordPic.Width = 48;
                     X -= 40;
-                    swordPic.Image = Form1.swordList[3];                    
+                    swordPic.Image = Form1.swordList[3];
                     break;
                 case Facing.Right:
                     swordPic.Width = 48;
@@ -61,6 +61,14 @@ namespace _225_Final.Weapons
         {
             Form1.gameField.Controls.Remove(swordPic);
             swordPic.Dispose();
+        }
+
+        public void Hit(Enum getFacing)
+        {
+            foreach (Character octo in Character.characters)
+                if (octo is Enemy)
+                    if (swordPic.Bounds.IntersectsWith(octo.pic.Bounds))
+                        octo.isHit(getFacing, damage);
         }
     }
 }

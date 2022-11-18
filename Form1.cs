@@ -70,21 +70,23 @@ namespace _225_Final
                 player.Stop();
                 Character.characters.Add(link = new Link(360, 480));
                 gameTimer.Enabled = true;
-            }
+            }            
         }
 
         private void GameTimer_Tick(object? sender, EventArgs e)
         {
             link.Movement();
-            if(spawnTimerCount == 100 && Character.characters.Count <= 4)
+            if (spawnTimerCount == 100 && Character.characters.Count <= 4)
             {
-                Enemy octo = new Enemy(rng.Next(gameField.Width - 50), rng.Next(gameField.Height - 50));
+                Enemy octo = new Enemy(rng.Next(gameField.Width - 50) / 48 * 48, rng.Next(gameField.Height - 50) / 48 * 48);
                 Character.characters.Add(octo);
                 spawnTimerCount = 0;
             }
             spawnTimerCount++;
 
-            
+
         }
+
+
     }
 }

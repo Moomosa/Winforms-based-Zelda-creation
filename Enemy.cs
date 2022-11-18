@@ -27,11 +27,13 @@ namespace _225_Final
                 octoImage.Add(new Bitmap(image));
             }
             facing = (Facing)Form1.rng.Next(0, 4);
+            pic.SendToBack();
             Form1.gameField.Controls.Add(pic);
             animationTimer.Enabled = true;
             moveTimer.Enabled = true;
             moveTimer.Interval = 100;
             moveTimer.Tick += MoveTimer_Tick;
+            health = 2;
         }
 
         private void MoveTimer_Tick(object? sender, EventArgs e)
@@ -53,9 +55,20 @@ namespace _225_Final
             }
             moveCounter++;
             Movement();
+            Death();
         }
 
         public override void AnimationTimer_Tick(object? sender, EventArgs e)
+        {
+            Animation();
+
+            animCounter++;
+            if (animCounter == 9)
+                animCounter = 0;
+
+        }
+
+        public override void Animation()
         {
             switch (facing)
             {
@@ -79,10 +92,40 @@ namespace _225_Final
                     if (animCounter == 4) pic.Image = octoImage[7];
                     break;
             }
-            animCounter++;
-            if (animCounter == 9)
-                animCounter = 0;
 
+        }
+
+        public override void HitTimer_Tick(object? sender, EventArgs e)
+        {
+            
+            switch (facing)
+            {
+                case Facing.Up:
+                    pic.Top += 5;                    
+                    break;
+
+                case Facing.Down:
+                    pic.Top -= 5;
+                    break;
+
+                case Facing.Left:
+                    pic.Left += 5;
+                    break;
+
+                case Facing.Right:
+                    pic.Left -= 5;
+                    break;
+            }
+            hitCounter++;
+            Animation();
+            if(hitCounter == 20)
+            {
+                X = pic.Left;
+                Y = pic.Top;
+                hitTimer.Enabled = false;
+                animationTimer.Interval = 60;
+                moveTimer.Enabled = true;
+            }
         }
 
         public void ProcessMovement()
@@ -170,6 +213,24 @@ namespace _225_Final
                 isMoving = false;
 
         }
+        public override void isHit(Enum getFacing, int damage)
+        {
+            moveTimer.Enabled = false;
+            if ((Facing)getFacing == Facing.Down) facing = Facing.Up;
+            if ((Facing)getFacing == Facing.Up) facing = Facing.Down;
+            if ((Facing)getFacing == Facing.Left) facing = Facing.Right;
+            if ((Facing)getFacing == Facing.Right) facing = Facing.Left;
+            animCounter = 0;
+            hitCounter = 0;
+            animationTimer.Interval = 20;
+            hitTimer.Enabled = true;
+            isMoving = false;
+            health -= damage;
+        }
 
+        public override void Death()
+        {
+            base.Death();
+        }
     }
 }
