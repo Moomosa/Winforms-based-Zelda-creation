@@ -66,11 +66,12 @@ namespace _225_Final
             if (picTitle.Enabled == true && e.KeyChar == (char)Keys.Enter)
             {
                 picTitle.Enabled = false;
+                pnlTop.Visible = true;
                 gameField.Controls.Remove(picTitle);
                 player.Stop();
                 Character.characters.Add(link = new Link(360, 480));
                 gameTimer.Enabled = true;
-            }            
+            }
         }
 
         private void GameTimer_Tick(object? sender, EventArgs e)
@@ -78,15 +79,13 @@ namespace _225_Final
             link.Movement();
             if (spawnTimerCount == 100 && Character.characters.Count <= 4)
             {
-                Enemy octo = new Enemy(rng.Next(gameField.Width - 50) / 48 * 48, rng.Next(gameField.Height - 50) / 48 * 48);
+                Enemy octo = new Enemy(rng.Next(gameField.Width - 50) / 48 * 48, rng.Next(gameField.Height - 50 + 196) / 48 * 48);
                 Character.characters.Add(octo);
                 spawnTimerCount = 0;
             }
+            else if (spawnTimerCount == 100 && Character.characters.Count >= 4)
+                spawnTimerCount = 0;
             spawnTimerCount++;
-
-
         }
-
-
     }
 }

@@ -24,7 +24,7 @@ namespace _225_Final.Weapons
             swordPic.BackColor = Color.Transparent;
             swordPic.SizeMode = PictureBoxSizeMode.StretchImage;
 
-            switch (facing)
+            switch (facing)     //This checks player facing and places sword in correct place and image
             {
                 case Facing.Up:
                     swordPic.Width = 24;

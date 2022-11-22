@@ -1,6 +1,7 @@
 ﻿using _225_Final.Weapons;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -17,7 +18,6 @@ namespace _225_Final
         private Vector2 tileSize = new Vector2(24, 24);
         public bool isAttacking = false;
         private int speed = 5;
-        
 
         public Link(int x, int y) : base(x, y)
         {
@@ -44,7 +44,7 @@ namespace _225_Final
             {
                 if (inputDirection == new Vector2(0, -1)) //Up 0,-1
                 {
-                    facing = Facing.Up;                    
+                    facing = Facing.Up;
                 }
 
                 if (inputDirection == new Vector2(0, 1))  //Down 0,1
@@ -74,62 +74,60 @@ namespace _225_Final
 
         public void processMovement()
         {
-            if (inputDirection.Y == 0)
-                inputDirection.X = rightStrength - leftStrength;
-
-            if (inputDirection.X == 0)
-                inputDirection.Y = downStrength - upStrength;
-
-            if (inputDirection != Vector2.Zero)
+            if (!struck)
             {
-                initialPosition.X = X;
-                initialPosition.Y = Y;
-                isMoving = true;
-            }
-            else
-            {
-                //animState.Travel("Idle");
+                if (inputDirection.Y == 0)
+                    inputDirection.X = rightStrength - leftStrength;
+
+                if (inputDirection.X == 0)
+                    inputDirection.Y = downStrength - upStrength;
+
+                if (inputDirection != Vector2.Zero)
+                {
+                    initialPosition.X = X;
+                    initialPosition.Y = Y;
+                    isMoving = true;
+                }
+                else
+                {
+                    //animState.Travel("Idle");
+                }
             }
         }
 
         public void move()
         {
+            //Vector2 desiredStep = new Vector2(inputDirection.X * tileSize.X / 2, inputDirection.Y * tileSize.Y / 2);
             if (!isAttacking)
-            {
-                //Vector2 desiredStep = new Vector2(inputDirection.X * tileSize.X / 2, inputDirection.Y * tileSize.Y / 2);
-                if (isMoving)
-                {
-                    percentMovedToNextTile += speed * 0.08f;
-                    if (percentMovedToNextTile >= 1.0)
+                if (!struck)
+                    if (isMoving)
                     {
-                        X = (int)Math.Round(initialPosition.X + (tileSize.X * inputDirection.X));
-                        Y = (int)Math.Round(initialPosition.Y + (tileSize.Y * inputDirection.Y));
-                        pic.Left = X;
-                        pic.Top = Y;
-                        percentMovedToNextTile = 0.0f;
-                        isMoving = false;
+                        percentMovedToNextTile += speed * 0.08f;
+                        if (percentMovedToNextTile >= 1.0)
+                        {
+                            X = (int)Math.Round(initialPosition.X + (tileSize.X * inputDirection.X));
+                            Y = (int)Math.Round(initialPosition.Y + (tileSize.Y * inputDirection.Y));
+                            pic.Left = X;
+                            pic.Top = Y;
+                            percentMovedToNextTile = 0.0f;
+                            isMoving = false;
+                        }
+                        else
+                        {
+                            X = (int)Math.Round(initialPosition.X + (tileSize.X * inputDirection.X * percentMovedToNextTile));
+                            Y = (int)Math.Round(initialPosition.Y + (tileSize.Y * inputDirection.Y * percentMovedToNextTile));
+                            pic.Left = X;
+                            pic.Top = Y;
+                        }
                     }
-                    else
-                    {
-                        X = (int)Math.Round(initialPosition.X + (tileSize.X * inputDirection.X * percentMovedToNextTile));
-                        Y = (int)Math.Round(initialPosition.Y + (tileSize.Y * inputDirection.Y * percentMovedToNextTile));
-                        pic.Left = X;
-                        pic.Top = Y;
-                    }
-                }
-                else
-                    isMoving = false;
-            }
+
+            changeMap();
         }
         #endregion
         #region Animation
         public override void AnimationTimer_Tick(object? sender, EventArgs e)
         {
-            Animation();
-
-            animCounter++;
-            if (animCounter == 9)
-                animCounter = 0;
+            base.AnimationTimer_Tick(sender, e);
         }
 
         public override void Animation()
@@ -188,11 +186,8 @@ namespace _225_Final
                     sword.Remove();
                     isAttacking = false;
                     animCounter = 0;
-
                 }
-
             }
-
         }
 
         public void AnimationState()
@@ -203,7 +198,7 @@ namespace _225_Final
                 animationTimer.Enabled = false;
         }
         #endregion
-
+        #region Combat
         public void Attack()
         {
             isAttacking = true;
@@ -211,5 +206,43 @@ namespace _225_Final
             sword = new Sword(X, Y, facing);
             sword.Hit(facing);
         }
+
+        public override void isHit(Enum getFacing, int damage)
+        {
+            base.isHit(getFacing, damage);
+            struck = true;
+        }
+
+        public override void HitTimer_Tick(object? sender, EventArgs e)
+        {
+            isMoving = false;
+            inputDirection = new Vector2(0, 0);
+            base.HitTimer_Tick(sender, e);
+        }
+        #endregion
+        public void changeMap()
+        {
+            if (X >= Form1.gameField.Width - 24)
+            {
+                X = -20;
+                Map.X++;
+            }
+            if (X <= -24)
+            {
+                X = Form1.gameField.Width - 20;
+                Map.X--;
+            }
+            if (Y >= Form1.gameField.Height - 24)
+            {
+                Y = 196;
+                Map.Y--;
+            }
+            if (Y <= 192)
+            {
+                Y = Form1.gameField.Height - 20;
+                Map.Y++;
+            }
+        }
+
     }
 }

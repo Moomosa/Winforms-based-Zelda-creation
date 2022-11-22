@@ -55,17 +55,13 @@ namespace _225_Final
             }
             moveCounter++;
             Movement();
+            collide(damage);
             Death();
         }
 
         public override void AnimationTimer_Tick(object? sender, EventArgs e)
         {
-            Animation();
-
-            animCounter++;
-            if (animCounter == 9)
-                animCounter = 0;
-
+            base.AnimationTimer_Tick(sender, e);
         }
 
         public override void Animation()
@@ -97,35 +93,9 @@ namespace _225_Final
 
         public override void HitTimer_Tick(object? sender, EventArgs e)
         {
-            
-            switch (facing)
-            {
-                case Facing.Up:
-                    pic.Top += 5;                    
-                    break;
+            base.HitTimer_Tick(sender, e);
+            moveTimer.Enabled = true;
 
-                case Facing.Down:
-                    pic.Top -= 5;
-                    break;
-
-                case Facing.Left:
-                    pic.Left += 5;
-                    break;
-
-                case Facing.Right:
-                    pic.Left -= 5;
-                    break;
-            }
-            hitCounter++;
-            Animation();
-            if(hitCounter == 20)
-            {
-                X = pic.Left;
-                Y = pic.Top;
-                hitTimer.Enabled = false;
-                animationTimer.Interval = 60;
-                moveTimer.Enabled = true;
-            }
         }
 
         public void ProcessMovement()
@@ -216,21 +186,27 @@ namespace _225_Final
         public override void isHit(Enum getFacing, int damage)
         {
             moveTimer.Enabled = false;
-            if ((Facing)getFacing == Facing.Down) facing = Facing.Up;
-            if ((Facing)getFacing == Facing.Up) facing = Facing.Down;
-            if ((Facing)getFacing == Facing.Left) facing = Facing.Right;
-            if ((Facing)getFacing == Facing.Right) facing = Facing.Left;
-            animCounter = 0;
-            hitCounter = 0;
-            animationTimer.Interval = 20;
-            hitTimer.Enabled = true;
-            isMoving = false;
-            health -= damage;
+            base.isHit(getFacing, damage);
         }
 
         public override void Death()
         {
-            base.Death();
+            if (health <= 0)
+            {
+                base.Death();
+                moveTimer.Stop();
+            }
         }
+
+        public void collide(int damage)
+        {
+            foreach (Character octo in Character.characters)
+                if (octo is Enemy)
+                    if (Character.characters[0].pic.Bounds.IntersectsWith(octo.pic.Bounds))
+                        Character.characters[0].isHit(Character.characters[0].facing, damage);
+
+        }
+
+
     }
 }

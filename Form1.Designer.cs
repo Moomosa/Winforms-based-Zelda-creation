@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.picTitle = new System.Windows.Forms.PictureBox();
+            this.pnlTop = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.picTitle)).BeginInit();
             this.SuspendLayout();
             // 
@@ -43,6 +44,15 @@
             this.picTitle.TabIndex = 1;
             this.picTitle.TabStop = false;
             // 
+            // pnlTop
+            // 
+            this.pnlTop.BackColor = System.Drawing.Color.Black;
+            this.pnlTop.Location = new System.Drawing.Point(0, -1);
+            this.pnlTop.Name = "pnlTop";
+            this.pnlTop.Size = new System.Drawing.Size(752, 192);
+            this.pnlTop.TabIndex = 2;
+            this.pnlTop.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -50,6 +60,7 @@
             this.BackgroundImage = global::_225_Final.Properties.Resources.Ground;
             this.ClientSize = new System.Drawing.Size(752, 681);
             this.Controls.Add(this.picTitle);
+            this.Controls.Add(this.pnlTop);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -67,5 +78,6 @@
         #endregion
 
         private PictureBox picTitle;
+        private Panel pnlTop;
     }
 }
