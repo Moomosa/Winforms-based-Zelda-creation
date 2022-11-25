@@ -36,10 +36,11 @@
             // 
             // picTitle
             // 
+            this.picTitle.Dock = System.Windows.Forms.DockStyle.Fill;
             this.picTitle.Image = global::_225_Final.Properties.Resources.ZeldaTitle;
-            this.picTitle.Location = new System.Drawing.Point(0, -1);
+            this.picTitle.Location = new System.Drawing.Point(0, 0);
             this.picTitle.Name = "picTitle";
-            this.picTitle.Size = new System.Drawing.Size(752, 682);
+            this.picTitle.Size = new System.Drawing.Size(752, 721);
             this.picTitle.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picTitle.TabIndex = 1;
             this.picTitle.TabStop = false;
@@ -47,7 +48,7 @@
             // pnlTop
             // 
             this.pnlTop.BackColor = System.Drawing.Color.Black;
-            this.pnlTop.Location = new System.Drawing.Point(0, -1);
+            this.pnlTop.Location = new System.Drawing.Point(0, 0);
             this.pnlTop.Name = "pnlTop";
             this.pnlTop.Size = new System.Drawing.Size(752, 192);
             this.pnlTop.TabIndex = 2;
@@ -57,10 +58,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::_225_Final.Properties.Resources.Ground;
-            this.ClientSize = new System.Drawing.Size(752, 681);
-            this.Controls.Add(this.picTitle);
+            this.ClientSize = new System.Drawing.Size(752, 721);
             this.Controls.Add(this.pnlTop);
+            this.Controls.Add(this.picTitle);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;

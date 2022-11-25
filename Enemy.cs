@@ -11,14 +11,13 @@ namespace _225_Final
     public class Enemy : Character
     {
         private List<Image> octoImage = new();
-        private Vector2 tileSize = new Vector2(48, 48);
         private Timer moveTimer = new();
         public int damage = 1;
         private int speed = 2;
         int moveCounter = 0;
 
 
-        public Enemy(int x, int y) : base(x, y)
+        public Enemy(Point point, Map game) : base(point, game)
         {
             foreach (string image in Directory.GetFiles("Usable Sprites/Enemies"))
             {
@@ -27,8 +26,7 @@ namespace _225_Final
                 octoImage.Add(new Bitmap(image));
             }
             facing = (Facing)Form1.rng.Next(0, 4);
-            pic.SendToBack();
-            Form1.gameField.Controls.Add(pic);
+            tileSize = new Vector2(48, 48);
             animationTimer.Enabled = true;
             moveTimer.Enabled = true;
             moveTimer.Interval = 100;
@@ -156,9 +154,9 @@ namespace _225_Final
         }
 
 
-        public void move()
+        public override void move()
         {
-            //Vector2 desiredStep = new Vector2(inputDirection.X * tileSize.X / 2, inputDirection.Y * tileSize.Y / 2);
+            base.move();
             if (isMoving)
             {
                 percentMovedToNextTile += speed * 0.08f;

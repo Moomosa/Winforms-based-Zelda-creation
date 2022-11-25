@@ -16,6 +16,8 @@ namespace _225_Final
         protected Timer hitTimer = new();
         protected Vector2 inputDirection = new();
         protected Vector2 initialPosition = new();
+        protected Vector2 tileSize = new();
+        public Map map;
 
         public enum Facing { Up, Down, Left, Right }
         public Facing facing;
@@ -28,23 +30,25 @@ namespace _225_Final
         public int downStrength = 0;
         protected int hitCounter = 0;
         protected int health;
-        protected bool isMoving = false;
+        public bool isMoving = false;
         protected bool struck = false;
         protected float percentMovedToNextTile = 0.0f;
 
 
-        public Character(int x, int y)
+        public Character(Point point, Map game)
         {
-            X = x;
-            Y = y;
+            X = point.X;
+            Y = point.Y;
+            map = game;
             pic.Left = X;
             pic.Top = Y;
             pic.Width = 48;
             pic.Height = 48;
+            pic.BackgroundImage = new Bitmap("Usable Sprites/Environment/Ground.png");
             pic.BackColor = Color.Transparent;
             pic.SizeMode = PictureBoxSizeMode.StretchImage;
 
-            Form1.gameField.Controls.Add(pic);
+            map.Controls.Add(pic);
             animationTimer.Enabled = false;
             animationTimer.Interval = 60;
             animationTimer.Tick += AnimationTimer_Tick;
@@ -54,6 +58,32 @@ namespace _225_Final
             hitTimer.Tick += HitTimer_Tick;
         }
 
+        public virtual void move()
+        {
+            Vector2 desiredStep = new Vector2(initialPosition.X + inputDirection.X * tileSize.X / 2, initialPosition.Y + inputDirection.Y * tileSize.Y / 2);
+            Vector2 walkTileSize = new();
+            Point newpoint = new Point((int)desiredStep.X, (int)desiredStep.Y);
+            if (this is Link) walkTileSize = new Vector2(48, 48);
+            else walkTileSize = tileSize;
+            for (int i = 0; i < Map.Walls.Count; i++)
+            {
+                Rectangle rectangle = new Rectangle(newpoint, new Size((int)walkTileSize.X, (int)walkTileSize.Y));
+                if (!Map.Walls.Any(x => x.Bounds.IntersectsWith(rectangle)))
+                {
+                    X = newpoint.X;
+                    Y = newpoint.Y;
+                    isMoving = true;
+                    break;
+                }
+                else
+                {
+                    X = (int)initialPosition.X;
+                    Y = (int)initialPosition.Y;
+                    isMoving = false;
+                }
+            }
+
+        }
 
         public virtual void AnimationTimer_Tick(object? sender, EventArgs e)
         {
@@ -119,14 +149,14 @@ namespace _225_Final
 
         public virtual void Death()
         {
-                animationTimer.Stop();
-                Character.characters.Remove(this);
-                DeleteFromForm();
+            animationTimer.Stop();
+            Character.characters.Remove(this);
+            DeleteFromForm();
         }
 
         public void DeleteFromForm()
         {
-            Form1.gameField.Controls.Remove(pic);
+            map.Controls.Remove(pic);
 
             Dispose();
         }

@@ -15,11 +15,10 @@ namespace _225_Final
     {
         private List<Image> linkImage = new();
         Sword sword;
-        private Vector2 tileSize = new Vector2(24, 24);
         public bool isAttacking = false;
         private int speed = 5;
 
-        public Link(int x, int y) : base(x, y)
+        public Link(Point point, Map game) : base(point, game)
         {
             foreach (string image in Directory.GetFiles("Usable Sprites/Link"))
             {
@@ -29,6 +28,7 @@ namespace _225_Final
             }
             pic.Image = linkImage[5];
             facing = Character.Facing.Up;
+            tileSize = new Vector2(24, 24);
             health = 6;
         }
 
@@ -88,16 +88,12 @@ namespace _225_Final
                     initialPosition.Y = Y;
                     isMoving = true;
                 }
-                else
-                {
-                    //animState.Travel("Idle");
-                }
             }
         }
 
-        public void move()
+        public override void move()
         {
-            //Vector2 desiredStep = new Vector2(inputDirection.X * tileSize.X / 2, inputDirection.Y * tileSize.Y / 2);
+            base.move();
             if (!isAttacking)
                 if (!struck)
                     if (isMoving)
@@ -120,8 +116,15 @@ namespace _225_Final
                             pic.Top = Y;
                         }
                     }
-
             changeMap();
+        }
+
+        public void Wall()
+        {
+            pic.Left = (int)initialPosition.X;
+            pic.Top = (int)initialPosition.Y;
+            X = pic.Left;
+            Y = pic.Top;
         }
         #endregion
         #region Animation
@@ -183,7 +186,7 @@ namespace _225_Final
                 }
                 if (animCounter == 5)
                 {
-                    sword.Remove();
+                    map.Controls.Remove(sword.swordPic);
                     isAttacking = false;
                     animCounter = 0;
                 }
@@ -205,6 +208,7 @@ namespace _225_Final
             animCounter = 0;
             sword = new Sword(X, Y, facing);
             sword.Hit(facing);
+            map.Controls.Add(sword.swordPic);
         }
 
         public override void isHit(Enum getFacing, int damage)
@@ -222,25 +226,25 @@ namespace _225_Final
         #endregion
         public void changeMap()
         {
-            if (X >= Form1.gameField.Width - 24)
+            if (X > map.Width - 24)
             {
-                X = -20;
-                Map.X++;
+                X = -24;
+                map.mapX++;
             }
-            if (X <= -24)
+            if (X < -24)
             {
-                X = Form1.gameField.Width - 20;
-                Map.X--;
+                X = map.Width - 24;
+                map.mapX--;
             }
-            if (Y >= Form1.gameField.Height - 24)
+            if (Y > map.Height - 24)
             {
-                Y = 196;
-                Map.Y--;
+                Y = -24;
+                map.mapY--;
             }
-            if (Y <= 192)
+            if (Y < -24)
             {
-                Y = Form1.gameField.Height - 20;
-                Map.Y++;
+                Y = map.Height - 24;
+                map.mapY++;
             }
         }
 
