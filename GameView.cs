@@ -1,56 +1,47 @@
-﻿using System;
+﻿using _225_Final.Weapons;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using static System.Windows.Forms.LinkLabel;
+using Timer = System.Windows.Forms.Timer;
 
 namespace _225_Final
 {
-    public partial class Map : UserControl
+    public class GameView : Panel
     {
-        public Map gameMap;
-        public Link link;
         public static List<PictureBox> Walls = new();
-
+        public Link link;
+        Timer mainTimer = new();
+        public Overworld world;
         private int spawnTimerCount = 0;
-        public int mapX { get; set; } = 3;
+        public int mapX { get; set; } = 2;
         public int mapY { get; set; } = 1;
-        private int X { get; set; }
-        private int Y { get; set; }
-        public Map(int x, int y)
+        public Control c;
+
+        public GameView(Overworld overmap)
         {
-            InitializeComponent();
-            gameMap = this;
-            X = x;
-            Y = y;
-            gameMap.Left = X;
-            gameMap.Top = Y;
-
-            foreach (PictureBox pic in this.Controls)            
-                if ((string)pic.Tag == "Wall")
-                    Walls.Add(pic);            
-
-            Character.characters.Add(link = new Link(new Point(360, 240), this));
+            mainTimer.Interval = 20;
+            mainTimer.Tick += MainTimer_Tick;
             mainTimer.Enabled = true;
+            Size = new Size(768, 568);
+            world = overmap;
+            Character.characters.Add(link = new Link(new Point(360, 240), this));
+            c = world.BigMap.GetControlFromPosition(1, 3);
+            Controls.Add(c);
+            
+
+            foreach (PictureBox pic in c.Controls)
+                if ((string)pic.Tag == "Wall")
+                    Walls.Add(pic);
         }
 
-        private void mainTimer_Tick(object sender, EventArgs e)
+        private void MainTimer_Tick(object? sender, EventArgs e)
         {
-            for (int i = 0; i < Walls.Count; i++)
-                if (link.pic.Bounds.IntersectsWith(Walls[i].Bounds))
-                {
-                    link.isMoving = false;
-                    link.Wall();
-                    break;
-                }
-
-
             link.Movement();
             SpawnEnemy();
+
         }
 
         private void SpawnEnemy()       //Creates new enemy where there is no walls
@@ -61,13 +52,14 @@ namespace _225_Final
                 for (int i = 0; i < Walls.Count; i++)
                     while (true)
                     {
-                        newpoint = new Point(Form1.rng.Next(gameMap.Width - 50) / 48 * 48, Form1.rng.Next(gameMap.Height - 50) / 48 * 48);
+                        newpoint = new Point(Form1.rng.Next(Width - 50) / 48 * 48, Form1.rng.Next(Height - 50) / 48 * 48);
                         Rectangle rectangle = new Rectangle(newpoint, new Size(48, 48));
                         if (!Walls.Any(x => x.Bounds.IntersectsWith(rectangle)))    //I don't fully understand the lambda
                             //break the loop when there isn't an overlapping rectangle found
                             break;
                     }
                 Enemy octo = new Enemy(newpoint, this);
+                octo.BringToFront();
                 Character.characters.Add(octo);
                 spawnTimerCount = 0;
             }
@@ -76,7 +68,7 @@ namespace _225_Final
             spawnTimerCount++;
         }
 
-        private void Map_KeyDown(object sender, KeyEventArgs e)
+        private void View_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.A)
                 link.leftStrength = 1;
@@ -87,11 +79,11 @@ namespace _225_Final
             if (e.KeyCode == Keys.S)
                 link.downStrength = 1;
 
-            if (e.KeyCode == Keys.Z && !link.isAttacking)
+            if (e.KeyCode == Keys.L && !link.isAttacking)
                 link.Attack();
         }
 
-        private void Map_KeyUp(object sender, KeyEventArgs e)
+        private void View_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.A)
                 link.leftStrength = 0;

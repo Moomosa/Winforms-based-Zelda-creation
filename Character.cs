@@ -17,7 +17,7 @@ namespace _225_Final
         protected Vector2 inputDirection = new();
         protected Vector2 initialPosition = new();
         protected Vector2 tileSize = new();
-        public Map map;
+        public GameView view;
 
         public enum Facing { Up, Down, Left, Right }
         public Facing facing;
@@ -35,11 +35,10 @@ namespace _225_Final
         protected float percentMovedToNextTile = 0.0f;
 
 
-        public Character(Point point, Map game)
+        public Character(Point point, GameView game)
         {
             X = point.X;
             Y = point.Y;
-            map = game;
             pic.Left = X;
             pic.Top = Y;
             pic.Width = 48;
@@ -48,14 +47,17 @@ namespace _225_Final
             pic.BackColor = Color.Transparent;
             pic.SizeMode = PictureBoxSizeMode.StretchImage;
 
-            map.Controls.Add(pic);
+            view = game;
+            view.Controls.Add(pic);
+            pic.BringToFront();
             animationTimer.Enabled = false;
-            animationTimer.Interval = 60;
+            animationTimer.Interval = 30;
             animationTimer.Tick += AnimationTimer_Tick;
 
             hitTimer.Enabled = false;
             hitTimer.Interval = 20;
             hitTimer.Tick += HitTimer_Tick;
+            
         }
 
         public virtual void move()
@@ -65,10 +67,10 @@ namespace _225_Final
             Point newpoint = new Point((int)desiredStep.X, (int)desiredStep.Y);
             if (this is Link) walkTileSize = new Vector2(48, 48);
             else walkTileSize = tileSize;
-            for (int i = 0; i < Map.Walls.Count; i++)
+            for (int i = 0; i < GameView.Walls.Count; i++)
             {
                 Rectangle rectangle = new Rectangle(newpoint, new Size((int)walkTileSize.X, (int)walkTileSize.Y));
-                if (!Map.Walls.Any(x => x.Bounds.IntersectsWith(rectangle)))
+                if (!GameView.Walls.Any(x => x.Bounds.IntersectsWith(rectangle)))
                 {
                     X = newpoint.X;
                     Y = newpoint.Y;
@@ -156,7 +158,7 @@ namespace _225_Final
 
         public void DeleteFromForm()
         {
-            map.Controls.Remove(pic);
+            view.Controls.Remove(pic);
 
             Dispose();
         }

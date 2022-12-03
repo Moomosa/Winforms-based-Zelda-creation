@@ -1,6 +1,6 @@
 ﻿namespace _225_Final
 {
-    partial class Map
+    partial class Map13
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
@@ -42,16 +41,12 @@
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
             this.pictureBox12 = new System.Windows.Forms.PictureBox();
             this.pictureBox13 = new System.Windows.Forms.PictureBox();
-            this.pictureBox14 = new System.Windows.Forms.PictureBox();
             this.pictureBox15 = new System.Windows.Forms.PictureBox();
             this.pictureBox16 = new System.Windows.Forms.PictureBox();
             this.pictureBox17 = new System.Windows.Forms.PictureBox();
             this.pictureBox18 = new System.Windows.Forms.PictureBox();
             this.pictureBox19 = new System.Windows.Forms.PictureBox();
-            this.mainTimer = new System.Windows.Forms.Timer(this.components);
-            this.spawnTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
@@ -63,7 +58,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).BeginInit();
@@ -74,22 +68,12 @@
             // pictureBox1
             // 
             this.pictureBox1.BackgroundImage = global::_225_Final.Properties.Resources.RockWall;
-            this.pictureBox1.Location = new System.Drawing.Point(480, 0);
+            this.pictureBox1.Location = new System.Drawing.Point(432, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(288, 240);
+            this.pictureBox1.Size = new System.Drawing.Size(336, 240);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Tag = "Wall";
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackgroundImage = global::_225_Final.Properties.Resources.RockWall;
-            this.pictureBox2.Location = new System.Drawing.Point(432, 0);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(48, 192);
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
-            this.pictureBox2.Tag = "Wall";
             // 
             // pictureBox3
             // 
@@ -196,20 +180,10 @@
             this.pictureBox13.BackgroundImage = global::_225_Final.Properties.Resources.RockWall;
             this.pictureBox13.Location = new System.Drawing.Point(144, 0);
             this.pictureBox13.Name = "pictureBox13";
-            this.pictureBox13.Size = new System.Drawing.Size(144, 96);
+            this.pictureBox13.Size = new System.Drawing.Size(192, 96);
             this.pictureBox13.TabIndex = 6;
             this.pictureBox13.TabStop = false;
             this.pictureBox13.Tag = "Wall";
-            // 
-            // pictureBox14
-            // 
-            this.pictureBox14.BackgroundImage = global::_225_Final.Properties.Resources.RockWall;
-            this.pictureBox14.Location = new System.Drawing.Point(288, 0);
-            this.pictureBox14.Name = "pictureBox14";
-            this.pictureBox14.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox14.TabIndex = 7;
-            this.pictureBox14.TabStop = false;
-            this.pictureBox14.Tag = "Wall";
             // 
             // pictureBox15
             // 
@@ -261,11 +235,6 @@
             this.pictureBox19.TabStop = false;
             this.pictureBox19.Tag = "Wall";
             // 
-            // mainTimer
-            // 
-            this.mainTimer.Interval = 20;
-            this.mainTimer.Tick += new System.EventHandler(this.mainTimer_Tick);
-            // 
             // Map
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -275,13 +244,11 @@
             this.Controls.Add(this.pictureBox18);
             this.Controls.Add(this.pictureBox17);
             this.Controls.Add(this.pictureBox16);
-            this.Controls.Add(this.pictureBox14);
             this.Controls.Add(this.pictureBox13);
             this.Controls.Add(this.pictureBox12);
             this.Controls.Add(this.pictureBox11);
             this.Controls.Add(this.pictureBox10);
             this.Controls.Add(this.pictureBox3);
-            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pictureBox6);
             this.Controls.Add(this.pictureBox15);
@@ -292,10 +259,7 @@
             this.Controls.Add(this.pictureBox4);
             this.Name = "Map";
             this.Size = new System.Drawing.Size(768, 528);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Map_KeyDown);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Map_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
@@ -307,7 +271,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).EndInit();
@@ -320,7 +283,6 @@
         #endregion
 
         private PictureBox pictureBox1;
-        private PictureBox pictureBox2;
         private PictureBox pictureBox3;
         private PictureBox pictureBox4;
         private PictureBox pictureBox5;
@@ -332,13 +294,10 @@
         private PictureBox pictureBox11;
         private PictureBox pictureBox12;
         private PictureBox pictureBox13;
-        private PictureBox pictureBox14;
         private PictureBox pictureBox15;
         private PictureBox pictureBox16;
         private PictureBox pictureBox17;
         private PictureBox pictureBox18;
         private PictureBox pictureBox19;
-        private System.Windows.Forms.Timer mainTimer;
-        private System.Windows.Forms.Timer spawnTimer;
     }
 }

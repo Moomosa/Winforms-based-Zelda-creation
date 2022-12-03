@@ -17,7 +17,7 @@ namespace _225_Final
         int moveCounter = 0;
 
 
-        public Enemy(Point point, Map game) : base(point, game)
+        public Enemy(Point point, GameView view) : base(point, view)
         {
             foreach (string image in Directory.GetFiles("Usable Sprites/Enemies"))
             {
@@ -189,7 +189,7 @@ namespace _225_Final
 
         public override void Death()
         {
-            if (health <= 0)
+            if (health <= 0 || X > view.Width || X < 0 || Y > view.Height || Y < 0)
             {
                 base.Death();
                 moveTimer.Stop();

@@ -18,7 +18,8 @@ namespace _225_Final
         public bool isAttacking = false;
         private int speed = 5;
 
-        public Link(Point point, Map game) : base(point, game)
+
+        public Link(Point point, GameView view) : base(point, view)
         {
             foreach (string image in Directory.GetFiles("Usable Sprites/Link"))
             {
@@ -67,7 +68,6 @@ namespace _225_Final
             }
             else
             {
-                //animState.Travel("Idle");
                 isMoving = false;
             }
         }
@@ -119,13 +119,6 @@ namespace _225_Final
             changeMap();
         }
 
-        public void Wall()
-        {
-            pic.Left = (int)initialPosition.X;
-            pic.Top = (int)initialPosition.Y;
-            X = pic.Left;
-            Y = pic.Top;
-        }
         #endregion
         #region Animation
         public override void AnimationTimer_Tick(object? sender, EventArgs e)
@@ -186,7 +179,7 @@ namespace _225_Final
                 }
                 if (animCounter == 5)
                 {
-                    map.Controls.Remove(sword.swordPic);
+                    view.Controls.Remove(sword.swordPic);
                     isAttacking = false;
                     animCounter = 0;
                 }
@@ -208,7 +201,8 @@ namespace _225_Final
             animCounter = 0;
             sword = new Sword(X, Y, facing);
             sword.Hit(facing);
-            map.Controls.Add(sword.swordPic);
+            view.Controls.Add(sword.swordPic);
+            sword.swordPic.BringToFront();
         }
 
         public override void isHit(Enum getFacing, int damage)
@@ -224,27 +218,29 @@ namespace _225_Final
             base.HitTimer_Tick(sender, e);
         }
         #endregion
+
         public void changeMap()
         {
-            if (X > map.Width - 24)
+            if (X > view.Width - 24)
             {
-                X = -24;
-                map.mapX++;
+                X = -24;                
+                //map.mapX++;
+                //world.BigMap.GetControlFromPosition(world.BigMap.GetColumn(this), world.BigMap.GetRow(this));
             }
             if (X < -24)
             {
-                X = map.Width - 24;
-                map.mapX--;
+                X = view.Width - 24;
+                //map.mapX--;
             }
-            if (Y > map.Height - 24)
+            if (Y > view.Height - 24)
             {
                 Y = -24;
-                map.mapY--;
+                //map.mapY--;
             }
             if (Y < -24)
             {
-                Y = map.Height - 24;
-                map.mapY++;
+                Y = view.Height - 24;
+                //map.mapY++;
             }
         }
 
