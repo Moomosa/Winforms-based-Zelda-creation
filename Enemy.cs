@@ -11,7 +11,7 @@ namespace _225_Final
     public class Enemy : Character
     {
         private List<Image> octoImage = new();
-        private Timer moveTimer = new();
+        public Timer moveTimer = new();
         public int damage = 1;
         private int speed = 2;
         int moveCounter = 0;
@@ -32,8 +32,9 @@ namespace _225_Final
             moveTimer.Interval = 100;
             moveTimer.Tick += MoveTimer_Tick;
             health = 2;
+            Tag = "octo";
         }
-
+        #region Movement
         private void MoveTimer_Tick(object? sender, EventArgs e)
         {
             if (moveCounter == 10)
@@ -55,45 +56,6 @@ namespace _225_Final
             Movement();
             collide(damage);
             Death();
-        }
-
-        public override void AnimationTimer_Tick(object? sender, EventArgs e)
-        {
-            base.AnimationTimer_Tick(sender, e);
-        }
-
-        public override void Animation()
-        {
-            switch (facing)
-            {
-                case Facing.Up:
-                    if (animCounter == 0) pic.Image = octoImage[4];
-                    if (animCounter == 4) pic.Image = octoImage[5];
-                    break;
-
-                case Facing.Down:
-                    if (animCounter == 0) pic.Image = octoImage[0];
-                    if (animCounter == 4) pic.Image = octoImage[1];
-                    break;
-
-                case Facing.Left:
-                    if (animCounter == 0) pic.Image = octoImage[2];
-                    if (animCounter == 4) pic.Image = octoImage[3];
-                    break;
-
-                case Facing.Right:
-                    if (animCounter == 0) pic.Image = octoImage[6];
-                    if (animCounter == 4) pic.Image = octoImage[7];
-                    break;
-            }
-
-        }
-
-        public override void HitTimer_Tick(object? sender, EventArgs e)
-        {
-            base.HitTimer_Tick(sender, e);
-            moveTimer.Enabled = true;
-
         }
 
         public void ProcessMovement()
@@ -153,7 +115,6 @@ namespace _225_Final
             }
         }
 
-
         public override void move()
         {
             base.move();
@@ -179,8 +140,48 @@ namespace _225_Final
             }
             else
                 isMoving = false;
-
         }
+
+        #endregion
+        #region Animation
+        public override void AnimationTimer_Tick(object? sender, EventArgs e)
+        {
+            base.AnimationTimer_Tick(sender, e);
+        }
+
+        public override void Animation()
+        {
+            switch (facing)
+            {
+                case Facing.Up:
+                    if (animCounter == 0) pic.Image = octoImage[4];
+                    if (animCounter == 4) pic.Image = octoImage[5];
+                    break;
+
+                case Facing.Down:
+                    if (animCounter == 0) pic.Image = octoImage[0];
+                    if (animCounter == 4) pic.Image = octoImage[1];
+                    break;
+
+                case Facing.Left:
+                    if (animCounter == 0) pic.Image = octoImage[2];
+                    if (animCounter == 4) pic.Image = octoImage[3];
+                    break;
+
+                case Facing.Right:
+                    if (animCounter == 0) pic.Image = octoImage[6];
+                    if (animCounter == 4) pic.Image = octoImage[7];
+                    break;
+            }
+        }
+        #endregion
+
+        public override void HitTimer_Tick(object? sender, EventArgs e)
+        {
+            base.HitTimer_Tick(sender, e);
+            moveTimer.Enabled = true;
+        }
+
         public override void isHit(Enum getFacing, int damage)
         {
             moveTimer.Enabled = false;
@@ -196,15 +197,17 @@ namespace _225_Final
             }
         }
 
+        public override void Shoot()
+        {
+            base.Shoot();
+        }
+
         public void collide(int damage)
         {
             foreach (Character octo in Character.characters)
                 if (octo is Enemy)
                     if (Character.characters[0].pic.Bounds.IntersectsWith(octo.pic.Bounds))
                         Character.characters[0].isHit(Character.characters[0].facing, damage);
-
         }
-
-
     }
 }

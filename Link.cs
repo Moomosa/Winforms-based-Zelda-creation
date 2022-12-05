@@ -13,10 +13,17 @@ namespace _225_Final
 {
     public class Link : Character
     {
+        public delegate void HealthChange(int currentHealth);
+        public event HealthChange healthChange;
+        private Timer deathTimer = new();
+        int deathCounter = 0;
         private List<Image> linkImage = new();
         Sword sword;
         public bool isAttacking = false;
         private int speed = 5;
+        string dieTune = @"Sounds/Link_Die.wav";
+        string poink = @"Sounds/Poink.wav";
+        string gameover = @"Sounds/Game-Over.wav";
 
 
         public Link(Point point, GameView view) : base(point, view)
@@ -27,11 +34,20 @@ namespace _225_Final
                     continue;
                 linkImage.Add(new Bitmap(image));
             }
+            Tag = "player";
+            linkImage.Add(new Bitmap("Usable Sprites/Extra/Explode02.png"));
+            linkImage.Add(new Bitmap("Usable Sprites/Extra/Explode01.png"));
+
             pic.Image = linkImage[5];
             facing = Character.Facing.Up;
             tileSize = new Vector2(24, 24);
             health = 6;
+
+            deathTimer.Interval = 16;
+            deathTimer.Tick += DeathTimer_Tick;
+            deathTimer.Enabled = false;
         }
+
 
         #region Movement
         public void Movement()
@@ -116,7 +132,6 @@ namespace _225_Final
                             pic.Top = Y;
                         }
                     }
-            changeMap();
         }
 
         #endregion
@@ -179,7 +194,8 @@ namespace _225_Final
                 }
                 if (animCounter == 5)
                 {
-                    view.Controls.Remove(sword.swordPic);
+                    if (view.Controls.Contains(sword.swordPic))
+                        view.Controls.Remove(sword.swordPic);
                     isAttacking = false;
                     animCounter = 0;
                 }
@@ -205,10 +221,18 @@ namespace _225_Final
             sword.swordPic.BringToFront();
         }
 
+        public override void Shoot()
+        {
+            isAttacking = true;
+            base.Shoot();
+        }
+
         public override void isHit(Enum getFacing, int damage)
         {
             base.isHit(getFacing, damage);
+            healthChange.Invoke(health);
             struck = true;
+            Death();
         }
 
         public override void HitTimer_Tick(object? sender, EventArgs e)
@@ -217,32 +241,81 @@ namespace _225_Final
             inputDirection = new Vector2(0, 0);
             base.HitTimer_Tick(sender, e);
         }
-        #endregion
 
-        public void changeMap()
+        public override void Death()
         {
-            if (X > view.Width - 24)
+            if (health <= 0)
             {
-                X = -24;                
-                //map.mapX++;
-                //world.BigMap.GetControlFromPosition(world.BigMap.GetColumn(this), world.BigMap.GetRow(this));
-            }
-            if (X < -24)
-            {
-                X = view.Width - 24;
-                //map.mapX--;
-            }
-            if (Y > view.Height - 24)
-            {
-                Y = -24;
-                //map.mapY--;
-            }
-            if (Y < -24)
-            {
-                Y = view.Height - 24;
-                //map.mapY++;
+                for (int i = Character.characters.Count - 1; i >= 1; i--)
+                {
+                    if (Character.characters[i] is Enemy octo)
+                    {
+                        octo.moveTimer.Enabled = false;
+                        octo.pic.Image = null;
+                    }
+                    Character.characters[i].animationTimer.Enabled = false;
+                }
+                Form1.music.controls.stop();
+                view.mainTimer.Enabled = false;
+                view.mainTimer.Stop();
+                deathTimer.Enabled = true;
+                Form1.music.URL = dieTune;
+
+                Form1.music.controls.play();
+
+
+                base.Death();
+
             }
         }
+
+        private void DeathTimer_Tick(object? sender, EventArgs e)
+        {   //Whole animation should be ~2 seconds
+            if (deathCounter == 0 || deathCounter == 25 || deathCounter == 45 || deathCounter == 65) pic.Image = linkImage[0];
+            if (deathCounter == 10 || deathCounter == 30 || deathCounter == 50 || deathCounter == 70) pic.Image = linkImage[2];
+            if (deathCounter == 15 || deathCounter == 35 || deathCounter == 55 || deathCounter == 75) pic.Image = linkImage[4];
+            if (deathCounter == 20 || deathCounter == 40 || deathCounter == 60 || deathCounter == 80) pic.Image = linkImage[11];
+            if (deathCounter == 85)
+            {
+                for (int i = 0; i < view.Controls.Count; i++)
+                {
+                    view.Controls[i].BackColor = Color.Black;
+                    view.Controls[i].BackgroundImage = null;
+                }
+                view.BackColor = Color.Black;
+                view.Controls.Remove(view.c);
+                pic.Image = linkImage[14];
+            }
+            if (deathCounter == 100)
+            {
+                Form1.music.settings.playCount = 1;
+                Form1.music.URL = poink;
+                pic.Image = linkImage[15];
+            }
+            if (deathCounter == 105) pic.Image = linkImage[16];
+            if (deathCounter == 110)
+            {
+                Form1.music.controls.stop();
+                pic.Image = null;
+                pic.BackColor = Color.Transparent;
+            }
+            if (deathCounter == 115)
+            {
+                Form1.music.URL = gameover;
+                Label lblGameOver = new()
+                {
+                    Font = new Font("Nintendo NES Font", 20),
+                    Text = "GAME OVER",
+                    Size = new Size(255,27)
+                };
+                lblGameOver.Location = new Point((view.Width / 2) - (lblGameOver.Width / 2), view.Height / 2);
+                view.Controls.Add(lblGameOver);
+                deathTimer.Enabled = false;
+            }
+            deathCounter++;
+
+        }
+        #endregion
 
     }
 }

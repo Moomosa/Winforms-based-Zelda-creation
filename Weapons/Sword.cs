@@ -26,7 +26,7 @@ namespace _225_Final.Weapons
             swordList.Add(new Bitmap("Usable Sprites/Weapons/Sword01.png"));
             swordList.Add(new Bitmap("Usable Sprites/Weapons/Sword02.png"));
             swordList.Add(new Bitmap("Usable Sprites/Weapons/Sword03.png"));
-            swordList.Add(new Bitmap("Usable Sprites/Weapons/Sword04.png"));
+            swordList.Add(new Bitmap("Usable Sprites/Weapons/Sword04.png"));            
 
             swordPic.Height = 48;
             swordPic.BackColor = Color.Transparent;
@@ -62,9 +62,6 @@ namespace _225_Final.Weapons
             }
             swordPic.Left = X;
             swordPic.Top = Y;
-            
-            
-            //Form1.gameField.Controls.Add(swordPic);
         }
 
         public void Remove()

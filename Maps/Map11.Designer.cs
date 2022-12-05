@@ -1,6 +1,6 @@
 ﻿namespace _225_Final.Maps
 {
-    partial class Map12
+    partial class Map11
     {
         /// <summary> 
         /// Required designer variable.
@@ -37,6 +37,7 @@
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
             this.pictureBox9 = new System.Windows.Forms.PictureBox();
+            this.pictureBox10 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -46,49 +47,46 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.BackgroundImage = global::_225_Final.Properties.Resources.Bush;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 432);
+            this.pictureBox1.BackgroundImage = global::_225_Final.Properties.Resources.RRockWall;
+            this.pictureBox1.Location = new System.Drawing.Point(672, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(336, 96);
+            this.pictureBox1.Size = new System.Drawing.Size(96, 528);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Tag = "Wall";
             // 
             // pictureBox2
             // 
-            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox2.BackgroundImage = global::_225_Final.Properties.Resources.Bush;
-            this.pictureBox2.Location = new System.Drawing.Point(432, 336);
+            this.pictureBox2.BackgroundImage = global::_225_Final.Properties.Resources.RRockWall;
+            this.pictureBox2.Location = new System.Drawing.Point(0, 0);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(336, 192);
-            this.pictureBox2.TabIndex = 0;
+            this.pictureBox2.Size = new System.Drawing.Size(48, 96);
+            this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Tag = "Wall";
             // 
             // pictureBox3
             // 
-            this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox3.BackgroundImage = global::_225_Final.Properties.Resources.Bush;
-            this.pictureBox3.Location = new System.Drawing.Point(240, 336);
+            this.pictureBox3.BackgroundImage = global::_225_Final.Properties.Resources.RRockWall;
+            this.pictureBox3.Location = new System.Drawing.Point(0, 480);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(96, 96);
-            this.pictureBox3.TabIndex = 1;
+            this.pictureBox3.Size = new System.Drawing.Size(336, 48);
+            this.pictureBox3.TabIndex = 2;
             this.pictureBox3.TabStop = false;
             this.pictureBox3.Tag = "Wall";
             // 
             // pictureBox4
             // 
-            this.pictureBox4.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox4.BackgroundImage = global::_225_Final.Properties.Resources.Bush;
-            this.pictureBox4.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox4.BackgroundImage = global::_225_Final.Properties.Resources.RRockWall;
+            this.pictureBox4.Location = new System.Drawing.Point(432, 480);
             this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(96, 432);
-            this.pictureBox4.TabIndex = 1;
+            this.pictureBox4.Size = new System.Drawing.Size(240, 48);
+            this.pictureBox4.TabIndex = 2;
             this.pictureBox4.TabStop = false;
             this.pictureBox4.Tag = "Wall";
             // 
@@ -96,71 +94,80 @@
             // 
             this.pictureBox5.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox5.BackgroundImage = global::_225_Final.Properties.Resources.Bush;
-            this.pictureBox5.Location = new System.Drawing.Point(96, 0);
+            this.pictureBox5.Location = new System.Drawing.Point(432, 480);
             this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(240, 96);
-            this.pictureBox5.TabIndex = 1;
+            this.pictureBox5.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox5.TabIndex = 3;
             this.pictureBox5.TabStop = false;
-            this.pictureBox5.Tag = "Wall";
             // 
             // pictureBox6
             // 
             this.pictureBox6.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox6.BackgroundImage = global::_225_Final.Properties.Resources.Bush;
-            this.pictureBox6.Location = new System.Drawing.Point(240, 96);
+            this.pictureBox6.Location = new System.Drawing.Point(288, 480);
             this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(96, 96);
-            this.pictureBox6.TabIndex = 1;
+            this.pictureBox6.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox6.TabIndex = 3;
             this.pictureBox6.TabStop = false;
-            this.pictureBox6.Tag = "Wall";
             // 
             // pictureBox7
             // 
-            this.pictureBox7.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox7.BackgroundImage = global::_225_Final.Properties.Resources.Bush;
-            this.pictureBox7.Location = new System.Drawing.Point(432, 0);
+            this.pictureBox7.BackgroundImage = global::_225_Final.Properties.Resources.RRockTop;
+            this.pictureBox7.Location = new System.Drawing.Point(0, 432);
             this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(336, 192);
-            this.pictureBox7.TabIndex = 0;
+            this.pictureBox7.Size = new System.Drawing.Size(336, 48);
+            this.pictureBox7.TabIndex = 2;
             this.pictureBox7.TabStop = false;
             this.pictureBox7.Tag = "Wall";
             // 
             // pictureBox8
             // 
-            this.pictureBox8.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox8.BackgroundImage = global::_225_Final.Properties.Resources.Rock;
-            this.pictureBox8.Location = new System.Drawing.Point(144, 240);
+            this.pictureBox8.BackgroundImage = global::_225_Final.Properties.Resources.RRockTop;
+            this.pictureBox8.Location = new System.Drawing.Point(432, 432);
             this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox8.Size = new System.Drawing.Size(240, 48);
             this.pictureBox8.TabIndex = 2;
             this.pictureBox8.TabStop = false;
             this.pictureBox8.Tag = "Wall";
             // 
             // pictureBox9
             // 
-            this.pictureBox9.BackgroundImage = global::_225_Final.Properties.Resources.Sand;
-            this.pictureBox9.Location = new System.Drawing.Point(336, 0);
+            this.pictureBox9.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox9.BackgroundImage = global::_225_Final.Properties.Resources.Bush;
+            this.pictureBox9.Location = new System.Drawing.Point(48, 480);
             this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.Size = new System.Drawing.Size(96, 48);
+            this.pictureBox9.Size = new System.Drawing.Size(48, 48);
             this.pictureBox9.TabIndex = 3;
             this.pictureBox9.TabStop = false;
             // 
-            // Map12
+            // pictureBox10
+            // 
+            this.pictureBox10.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox10.BackgroundImage = global::_225_Final.Properties.Resources.Bush;
+            this.pictureBox10.Location = new System.Drawing.Point(528, 480);
+            this.pictureBox10.Name = "pictureBox10";
+            this.pictureBox10.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox10.TabIndex = 3;
+            this.pictureBox10.TabStop = false;
+            // 
+            // Map11
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::_225_Final.Properties.Resources.Ground;
-            this.Controls.Add(this.pictureBox7);
+            this.BackgroundImage = global::_225_Final.Properties.Resources.Sand;
             this.Controls.Add(this.pictureBox9);
-            this.Controls.Add(this.pictureBox8);
-            this.Controls.Add(this.pictureBox4);
-            this.Controls.Add(this.pictureBox5);
             this.Controls.Add(this.pictureBox6);
+            this.Controls.Add(this.pictureBox10);
+            this.Controls.Add(this.pictureBox5);
+            this.Controls.Add(this.pictureBox4);
+            this.Controls.Add(this.pictureBox8);
+            this.Controls.Add(this.pictureBox7);
             this.Controls.Add(this.pictureBox3);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pictureBox1);
-            this.Name = "Map12";
+            this.Name = "Map11";
             this.Size = new System.Drawing.Size(768, 528);
+            this.Tag = "";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
@@ -170,6 +177,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -185,5 +193,6 @@
         private PictureBox pictureBox7;
         private PictureBox pictureBox8;
         private PictureBox pictureBox9;
+        private PictureBox pictureBox10;
     }
 }

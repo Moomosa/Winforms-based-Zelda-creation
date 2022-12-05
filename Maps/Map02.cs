@@ -27,14 +27,15 @@ namespace _225_Final.Maps
             fairy.Image = pics[0];
             fairy.Height = 48;
             fairy.Width = 48;
-            fairy.SizeMode = PictureBoxSizeMode.StretchImage;
+            fairy.SizeMode = PictureBoxSizeMode.CenterImage;
+            fairy.BackColor = Color.Transparent;
             fairy.Location = new Point(336, 240);
             fairy.Tag = "Fairy";
             Controls.Add(fairy);
 
             animTimer.Interval = 20;
             animTimer.Tick += AnimTimer_Tick;
-            animTimer.Enabled = false;
+            animTimer.Enabled = true;
         }
 
         private void AnimTimer_Tick(object? sender, EventArgs e)

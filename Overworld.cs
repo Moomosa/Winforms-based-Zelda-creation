@@ -13,9 +13,6 @@ namespace _225_Final
 {
     public partial class Overworld : UserControl
     {
-        public int mapX { get; set; } = 1;
-        public int mapY { get; set; } = 3;
-
         Map03 map03 = new();
         Map13 map13 = new();
         Map23 map23 = new();
@@ -26,6 +23,15 @@ namespace _225_Final
         Map22 map22 = new();
         Map32 map32 = new();
 
+        Map01 map01 = new();
+        Map11 map11 = new();
+        Map21 map21 = new();
+        Map31 map31 = new();
+
+        Map00 map00 = new();
+        Map10 map10 = new();
+        Map20 map20 = new();
+        Map30 map30 = new();
 
         public Overworld()
         {
@@ -41,18 +47,18 @@ namespace _225_Final
             BigMap.Controls.Add(map22, 2, 2);
             BigMap.Controls.Add(map32, 3, 2);
 
+            BigMap.Controls.Add(map01, 0, 1);
+            BigMap.Controls.Add(map11, 1, 1);
+            BigMap.Controls.Add(map21, 2, 1);
+            BigMap.Controls.Add(map31, 3, 1);
 
-            map03.Dock = DockStyle.Fill;
-            map13.Dock = DockStyle.Fill;
-            map23.Dock = DockStyle.Fill;
-            map33.Dock = DockStyle.Fill;
+            BigMap.Controls.Add(map00, 0, 0);
+            BigMap.Controls.Add(map10, 1, 0);
+            BigMap.Controls.Add(map20, 2, 0);
+            BigMap.Controls.Add(map30, 3, 0);
 
-            map02.Dock = DockStyle.Fill;
-            map12.Dock = DockStyle.Fill;
-            map22.Dock = DockStyle.Fill;
-            map32.Dock = DockStyle.Fill;
-
-
+            foreach (UserControl map in BigMap.Controls)
+                map.Dock = DockStyle.Fill;
 
             ClientSize = new Size(768, 528);
         }

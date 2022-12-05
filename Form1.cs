@@ -2,6 +2,7 @@ using System.Media;
 using System.Runtime.CompilerServices;
 using static System.Windows.Forms.LinkLabel;
 using Timer = System.Windows.Forms.Timer;
+using WMPLib;
 
 namespace _225_Final
 {
@@ -9,18 +10,27 @@ namespace _225_Final
     {
         public static Random rng = new Random();
 
+        public static WindowsMediaPlayer music = new();
+        WindowsMediaPlayer sounds = new();
         Overworld world = new();
         Link link;
-        SoundPlayer player = new();
         GameView view;
+        string intro = @"Sounds/Intro.wav";
+        string mainMusic = @"Sounds/Overworld.wav";
+        string swordSound = @"Sounds/Sword.wav";
+        string arrowShot = @"Sounds/Arrow.wav";
+        Bitmap mainHud = new Bitmap("Usable Sprites/HUD/MainHud.png");
 
         public Form1()
         {
             InitializeComponent();
-            player.SoundLocation = @"Sounds/Intro.wav";
-            AutoScroll = false;
-            //player.PlayLooping();     //undo this commenting later
+
+            music.URL = intro;
+            music.settings.setMode("loop", true);
+            music.controls.play();
+
         }
+
 
         private void Form1_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -32,9 +42,15 @@ namespace _225_Final
                 Controls.Add(view);
                 link = view.link;
                 Controls.Remove(picTitle);
-                player.Stop();
+                music.URL = mainMusic;
+                link.healthChange += HealthCheck;
             }
             else { }
+        }
+
+        private void HealthCheck(int currentHealth)
+        {
+            picCurrentHealth.Width = (int)(currentHealth * 11.5);
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -49,8 +65,17 @@ namespace _225_Final
                 link.downStrength = 1;
 
             if (e.KeyCode == Keys.L && !link.isAttacking)
+            {
                 link.Attack();
-
+                sounds.URL = swordSound;
+                sounds.controls.play();
+            }
+            if (e.KeyCode == Keys.K && !link.isAttacking)
+            {
+                link.Shoot();
+                sounds.URL = arrowShot;
+                sounds.controls.play();
+            }
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
@@ -63,8 +88,6 @@ namespace _225_Final
                 link.upStrength = 0;
             if (e.KeyCode == Keys.S)
                 link.downStrength = 0;
-
         }
-
     }
 }
